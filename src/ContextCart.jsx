@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const ContextCart = () => {
-  const [cart, setCart] = useState([]);
+ const [searchTerm, setsearchTerm] = useState("");
+
  const [CartItem, setCartItem] = useState(0)
     const decrement = () => {
         if (CartItem > 0)
@@ -48,7 +49,9 @@ const ContextCart = () => {
      
     </ul>
     <form className="form-inline my-2 my-lg-0">
-      <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+      <input className="form-control mr-sm-2" type="search" placeholder="Search"
+       aria-label="Search"
+        onChange={(event)=>{setsearchTerm(event.target.value)}}/>
       <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <FontAwesomeIcon className="ShoppingCart" icon ={  faShoppingCart } 
@@ -58,7 +61,14 @@ const ContextCart = () => {
 </nav>
 <div className="ItemS-container">
            {
-        Itemapi.map((curElem) => {
+        Itemapi.filter((curElem)=> {
+          if(searchTerm==="")
+          return curElem
+          else if (curElem.tittle.toLowerCase().includes(searchTerm.toLowerCase()))
+          {
+            return curElem
+          }
+        }).map((curElem) => {
             return (
                 <>
                  <div class="card">
